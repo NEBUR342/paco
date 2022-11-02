@@ -1,38 +1,23 @@
 <?php
-
 namespace App\Service;
-
-
-use App\Modelos\Pelicula;
-use Dotenv\Dotenv;
-$dotenv = Dotenv::createImmutable(__DIR__."/../../");
+use App\Modelos\Foto;
+$dotenv = \Dotenv\Dotenv::createImmutable(__DIR__."/../../");
 $dotenv->load();
-//require __DIR__."/../../vendor/autoload.php";
-
-//define('URL', "https://api.themoviedb.org/3/movie/popular?api_key=92d078563f025b78f666e9ce88afd7b6&language=en-US&page=1");
-//define("IMG", "https://image.tmdb.org/t/p/w500");
-define("URL", $_ENV['URL_BASE'].$_ENV['KEY']);
-// die(URL);
+define("URL", $_ENV['URL_BASE'].$_ENV['KEY'].$_ENV['QUERY']);
 define("IMG",$_ENV['URL_IMG']);
-class ApiService
-{
-    public function getPelicula(): array
+class ApiService{
+    public function getFoto(): array
     {
-        $peliculas = [];
+        $fotos = [];
         $datos = file_get_contents(URL);
         //Transformar en Json
         $datosJson=json_decode($datos);
-        $datosPelis=$datosJson->results;
-        foreach($datosPelis as $objPelicula){
-            $peliculas[]=(new Pelicula)->setTitulo($objPelicula->title)
-            ->setResumen($objPelicula->overview)
-            ->setPoster(IMG.$objPelicula->poster_path)
-            ->setFechaEstreno($objPelicula->release_date)
-            ->setCaratula(IMG.$objPelicula->backdrop_path);    
+        $datosFotos=$datosJson->hits;
+        foreach($datosFotos as $objFoto){
+            $fotos[]=(new Foto)->setFoto($objFoto->webformatURL)
+            ->setAutor($objFoto->user)
+            ->setLikes($objFoto->likes);    
         }
-        // echo "<pre>";
-        // var_dump($peliculas);
-        // echo "</pre>";
-        return $peliculas;
+        return $fotos;
     }
 }

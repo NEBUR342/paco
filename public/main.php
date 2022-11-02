@@ -1,54 +1,52 @@
 <?php
-    require __DIR__."/../vendor/autoload.php";
-    use App\Service\ApiService;
-    $peliculas=(new ApiService)->getPelicula();
-
+use App\Service\ApiService;
+require __DIR__ . "/../vendor/autoload.php";
+$fotos = (new ApiService)->getFoto();
 ?>
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ruben Alvarez Fernandez</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
-    <title>Document</title>
 </head>
-
-<body style="background-color:dimgrey">
+<body style="background-color:darkgray;">
     <div class="container mt-4">
-        <div id="demo" class="carousel slide" data-bs-ride="carousel">
+        <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+            <center>
             <div class="carousel-inner">
                 <?php
-                $cont=1;
-                foreach($peliculas as $peli){
-                    echo ($cont==1) ? "<div class='carousel-item active'>":"<div class='carousel-item'>";
-                    echo "<img src='{$peli->getCaratula()}' class= 'd-block w-100' alt='as'>";
+                $cont = 1;
+                foreach ($fotos as $fot) {
+                    echo ($cont == 1) ? "<div class='carousel-item active'>" : "<div class='carousel-item'>";
+                    echo <<<TXT
+                    <div class="card" style="width: 36rem;">
+                    <img src="{$fot->getFoto()}" class="card-img-top" alt="poster fot">
+                    <div class="card-body">
+                    <h5 class="card-title">Autor: {$fot->getAutor()}</h5>
+                    <p class="card-text">Likes: {$fot->getLikes()}</p>
+                    </div>
+                    </div>
+                    TXT;
                     echo "</div>";
                     $cont++;
                 }
                 ?>
-                <div class='carousel-item active'>
-                    <img src=https://image.tmdb.org/t/p/w500/https://image.tmdb.org/t/p/w500//qxeqKcVBWnQxUp1w6fwWcxZEA6m.jpg class='d-block w-100' alt='sin imagenes'>
-                </div>
-                <div class='carousel-item'>
-                    <img src=https://image.tmdb.org/t/p/w500/https://image.tmdb.org/t/p/w500//tIX6j3NzadlwGcJ52nuWdmtOQkg.jpg class='d-block w-100' alt='sin imagenes'>
-                </div>
-                <div class='carousel-item'>
-                    <img src=https://image.tmdb.org/t/p/w500/https://image.tmdb.org/t/p/w500//aTovumsNlDjof7YVoU5nW2RHaYn.jpg class='d-block w-100' alt='sin imagenes'>
-                </div>
-                <div class='carousel-item'>
-                    <img src=https://image.tmdb.org/t/p/w500/https://image.tmdb.org/t/p/w500//5GA3vV1aWWHTSDO5eno8V5zDo8r.jpg class='d-block w-100' alt='sin imagenes'>
-                </div>
-                <div class='carousel-item'>
-                    <img src=https://image.tmdb.org/t/p/w500/https://image.tmdb.org/t/p/w500//5hoS3nEkGGXUfmnu39yw1k52JX5.jpg class='d-block w-100' alt='sin imagenes'>
-                </div>
-                <div class='carousel-item'>
-                </head>
-
-                    <body>
-
-                    </body>
+            </div>
+            </center>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+    </div>
+</body>
 
 </html>
